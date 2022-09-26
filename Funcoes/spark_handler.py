@@ -11,6 +11,21 @@ from re import sub
 from unidecode import unidecode
 
 def split_column(df):
+    """
+    Divide a coluna "ICAO IATA".
+
+    Parameters
+    ----------
+    df : spark dataframe
+        Dataframe contendo coluna "ICAO IATA.
+
+    Returns
+    -------
+    df : spark dataframe
+        dataframe contendo colunas "ICAO" e "IATA", mas sem a coluna 
+        "ICAO IATA".
+
+    """
     split = f.split(df['ICAO IATA'], ' ')    
         
     df = df.withColumn('ICAO', split.getItem(0))
@@ -22,6 +37,20 @@ def split_column(df):
     return df
 
 def columns_to_snake(df):
+    """
+    Renomeia colunas do dataframe para snake_case
+
+    Parameters
+    ----------
+    df : Spark Dataframe
+        qualquer dataframe do spark.
+
+    Returns
+    -------
+    Spark Dataframe
+        dataframe com colunas renomeadas em snake_case.
+
+    """
 
     def snake_case(string):
         string = unidecode(string)
@@ -38,6 +67,21 @@ def columns_to_snake(df):
     return df
 
 def get_uniques_icao(df):
+    """
+    Seleciona valores únicos de ICAO, tanto para aeroportos de origem como de 
+    destino
+
+    Parameters
+    ----------
+    df : Spark DataFrame
+        dataframe contendo os voos da base de dados.
+
+    Returns
+    -------
+    List
+        Lista contendo valores únicos de ICAO.
+
+    """
     
     df_uniques_destino = df.dropDuplicates(['icao_aerodromo_destino'])
     df_uniques_origem = df.dropDuplicates(['icao_aerodromo_origem'])

@@ -27,6 +27,19 @@ class DB:
         
     
     def insert_db(self, tabelas):
+        """
+        Insere um ou vários dataframes de acordo com o dicionário informado.
+
+        Parameters
+        ----------
+        tabelas : dict
+            dicionario onde a chave é o nome da tabela e o valor são os dados.
+
+        Returns
+        -------
+        None
+
+        """
         def make_inter(numero_colunas):
             a = '('
             for i in range(0,numero_colunas):

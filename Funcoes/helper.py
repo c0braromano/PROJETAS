@@ -14,6 +14,20 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 def exec_requests(icao_list):
+    """
+    Executa requisições para resgatar informações sobre aeroportos.
+
+    Parameters
+    ----------
+    icao_list : List
+        Lista com icao dos aeroportos.
+
+    Returns
+    -------
+    Pandas DataFrame
+        dataframe contendo informações como ICAO, IATA, nome, endereço e etc.
+
+    """
     def get_info(icao):
         url = "https://airport-info.p.rapidapi.com/airport"
         
@@ -45,7 +59,23 @@ def exec_requests(icao_list):
 
     return df
 
-def split_dataframe(df, chunk_size = 10000): 
+def split_dataframe(df, chunk_size):
+    """
+    Divide o dataframe em um tamanho definido.
+
+    Parameters
+    ----------
+    df : pandas DataFrame
+        dataframe a ser dividido.
+    chunk_size : int
+        número máximo de linhas por parte.
+
+    Returns
+    -------
+    chunks : List
+        Lista de dataframes.
+
+    """
     chunks = list()
     num_chunks = len(df) // chunk_size + 1
     for i in range(num_chunks):
